@@ -1,9 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
 import { Button } from 'antd';
+import * as React from 'react';
+import axios from 'axios';
 
 function App() {
   //Auth URL: https://notify-bot.line.me/oauth/authorize
+
+  window.axios = axios
+
+  React.useEffect(() => {
+    let params = new URLSearchParams(document.location.search)
+    if(params.has('code') && params.has('state')){
+      console.log('hii')
+      axios('/api/getAccessToken', {code: params.get('code'), state: params.get('state')}).then(res => console.log(res))
+    }
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
