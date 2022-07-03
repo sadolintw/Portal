@@ -20,10 +20,14 @@ import com.google.gson.JsonParser;
 @RestController
 @RequestMapping("api/line_notify")
 @CrossOrigin
-public class UserController {
+public class LineNotifyController {
     //Auth URL: https://notify-bot.line.me/oauth/authorize
     //Access Token URL: https://notify-bot.line.me/oauth/token
     //Resource Line Notify: https://notify-api.line.me/api/notify
+
+    public String redirectUri = "https://portal.sadolintw.app";
+    // public String redirectUri = "http://localhost:3000";
+
     @GetMapping("hello")
     public String getHello(){
         return "hello";
@@ -45,8 +49,7 @@ public class UserController {
         MultiValueMap<String, String> payload = new LinkedMultiValueMap<String, String>();
         payload.add("grant_type", "authorization_code");
         payload.add("code", code);
-        payload.add("redirect_uri", "https://portal.sadolintw.app");
-        // payload.add("redirect_uri", "http://localhost:3000");
+        payload.add("redirect_uri", redirectUri);
         // payload.add("client_id", System.getenv("CLIENT_ID"));
         // payload.add("client_secret", System.getenv("CLIENT_SECRET"));
         payload.add("client_id", clientId);
