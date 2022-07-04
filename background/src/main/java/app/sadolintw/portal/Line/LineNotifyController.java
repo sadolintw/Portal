@@ -25,23 +25,17 @@ public class LineNotifyController {
     //Access Token URL: https://notify-bot.line.me/oauth/token
     //Resource Line Notify: https://notify-api.line.me/api/notify
 
-    public String redirectUri = "https://portal.sadolintw.app";
-    // public String redirectUri = "http://localhost:3000";
+    // public String redirectUri = "https://portal.sadolintw.app";
+    public String redirectUri = "http://localhost:3000";
 
-    @GetMapping("hello")
-    public String getHello(){
-        return "hello";
-    }
 
     @GetMapping("getAccessToken")
     public String getAccessToken(
         @RequestParam(name="code") String code,
-        @RequestParam(name="state") String state,
-        @RequestParam(name="client_id") String clientId,
-        @RequestParam(name="client_secret") String clientSecret
+        @RequestParam(name="client_id") String clientId
+        // @RequestParam(name="client_secret") String clientSecret
     ){
-        System.out.println("code:"+code+" state:"+state);
-        // RestTemplate restTemplate = new RestTemplate();
+        System.out.println("code:"+code);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -51,9 +45,9 @@ public class LineNotifyController {
         payload.add("code", code);
         payload.add("redirect_uri", redirectUri);
         // payload.add("client_id", System.getenv("CLIENT_ID"));
-        // payload.add("client_secret", System.getenv("CLIENT_SECRET"));
+        payload.add("client_secret", System.getenv("LINE_NOTIFY_CLIENT_SECRET"));
         payload.add("client_id", clientId);
-        payload.add("client_secret", clientSecret);
+        // payload.add("client_secret", clientSecret);
         HttpEntity<?> httpEntity = new HttpEntity<>(payload, headers);
         ResponseEntity<String> responseEntity;
         String response;
